@@ -13,8 +13,8 @@ import { NotImplementedError } from '../extensions/index.js';
  */
 export default function getSeason(date) {
   if (!date) return 'Unable to determine the time of year!';
+  if ((date instanceof Date) == false) throw new Error('Invalid date!');
   const monthNumber = date.getMonth();
-  if (monthNumber == false) throw new Error('Invalid date!');
   if (monthNumber == 11 || monthNumber <= 1) {
     return 'winter'
   } else if (monthNumber > 1 && monthNumber <= 4) {
@@ -24,7 +24,6 @@ export default function getSeason(date) {
   } else if (monthNumber > 7 && monthNumber <= 10) {
     return 'autumn (fall)'
   } else {
-    throw new Error('Invalid date!');
+    return new Error('Invalid date!');
   }
-
 }
