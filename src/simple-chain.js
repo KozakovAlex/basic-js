@@ -10,15 +10,20 @@ export default {
     return this.chain.length;
   },
   addLink(value) {
-    if (!value) {
-      this.chain.push('( null )');
+    if (value === '') {
+      this.chain.push('( )');
+    } else if (value === null) {
+      this.chain.push(`( null )`)
+    } else if (value === 0) {
+      this.chain.push(`( 0 )`)
     } else {
       this.chain.push(`( ${String(value)} )`);
     }
     return this;
   },
   removeLink(position) {
-    if (isNaN(position) || position % 10 !== 0 || !this[position - 1]) {
+    if (isNaN(position) || position - Math.trunc(position) !== 0 || !this.chain[position - 1]) {
+      this.chain.length = 0;
       throw new Error(`You can't remove incorrect link!`);
     } else {
       this.chain.splice(position - 1, 1);
@@ -30,6 +35,8 @@ export default {
     return this;
   },
   finishChain() {
-    return this.chain.join('~~');
+    const str = this.chain.join('~~');
+    this.chain.length = 0;
+    return str;
   }
 };
